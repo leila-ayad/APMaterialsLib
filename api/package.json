@@ -1,0 +1,34 @@
+{
+  "name": "materials-library",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm run test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leila-alhemali/APMaterialsLib.git"
+  },
+  "keywords": [
+    "art"
+  ],
+  "author": "Leila AlHemali",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leila-alhemali/APMaterialsLib/issues"
+  },
+  "homepage": "https://github.com/leila-alhemali/APMaterialsLib#readme",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "eslint": "^8.12.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "knex": "^1.0.5",
+    "knex-cleaner": "^1.3.1",
+    "sqlite3": "^5.0.2"
+  }
+}

@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const { restricted } = require("./auth-middleware");
 
 const router = require("express").Router();
-const User = require("../users/users-model.js");
+const User = require("../../users/users-model.js");
 
 const { BCRYPT_ROUNDS, JWT_SECRET } = require("../config");
 

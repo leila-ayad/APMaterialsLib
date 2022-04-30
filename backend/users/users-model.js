@@ -1,4 +1,4 @@
-const db = require("../data/dbConfig");
+const db = require("../backend/data/dbConfig");
 
 module.exports = {
   findBy,

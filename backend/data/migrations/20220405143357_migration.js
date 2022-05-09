@@ -4,6 +4,9 @@ exports.up = async function (knex) {
       tbl.increments("member_id").notNullable();
       tbl.string("username", 128).notNullable().unique();
       tbl.string("password", 256).notNullable();
+      tbl.string("email", 256).notNullable();
+      tbl.string("name", 126).notNullable();
+      tbl.string("pronouns").notNullable();
       tbl.integer("logged_out_time");
     })
 

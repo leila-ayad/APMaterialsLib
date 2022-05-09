@@ -17,7 +17,8 @@ export default function Login(props) {
 
   return (
     <div className="LoginContainer">
-      <form className="loginValues" onSubmit={onSubmit}>
+      <h2> Log In!</h2>
+      <form className="LoginForm" onSubmit={onSubmit}>
         <input
           name="username"
           type="text"
@@ -36,6 +37,8 @@ export default function Login(props) {
           <button className="LoginButton">Let's Go!</button>
         </div>
       </form>
+      <a href="link here">Create New User</a>
+      <a href="link here">Forgot Password?</a>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 const Material = require("./materials-model");
-const { restricted } = require("../auth/auth-middleware");
+const { restricted } = require("../auth-middleware");
 router.get("/", restricted, async (req, res, next) => {
   let materials = await Material.getMaterials();
   res.status(200).json(materials);

@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run test",
+    "watch:dev": "nodemon",
     "start": "node index.js",
     "server": "nodemon index.js",
     "migrate": "npx knex migrate:latest",
@@ -28,7 +29,7 @@
   "devDependencies": {
     "cross-env": "^7.0.3",
     "eslint": "^8.12.0",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.16"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

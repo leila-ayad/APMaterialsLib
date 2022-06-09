@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../config");
 
-const User = require("../../users/users-model");
+const User = require("../users/users-model");
 
 // AUTHENTICATION
 const restricted = (req, res, next) => {

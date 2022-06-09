@@ -14,10 +14,10 @@ server.use(cors());
 server.use("/api/users", usersRouter);
 server.use("/api/materials", materialsRouter)
 server.use("/api/auth", authRouter)
-server.use("/", () => {
-  return (
-    "hi!"
-  )
+
+
+server.use("/", (req, res) => {
+  res.send("Hi!")
 })
 
 

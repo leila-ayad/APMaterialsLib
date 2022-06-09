@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 
 const usersRouter = require("./users/users-router");
-const materialsRouter = require('./materials/materials-router')
+const materialsRouter = require('./auth/materials/materials-router')
 const authRouter = require('./auth/auth-router.js')
 
 

@@ -17,7 +17,7 @@ server.use("/api/auth", authRouter)
 
 
 server.use("/", (req, res) => {
-  res.send("Hi!")
+  res.send("Hi! Not sure how you got here. Please return to abstractpicnic.com")
 })
 
 

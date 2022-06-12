@@ -10,7 +10,7 @@ This is the backend code for the Materials Library. This program serves the Abst
 
 AUTH ROUTER
 
-../api/auth/register 
+POST ../api/auth/register 
 
 Registers a new user to the database. Use following payload: 
 {
@@ -18,11 +18,11 @@ Registers a new user to the database. Use following payload:
     "password" : "awfulPW",
     "email": "leila@ap.com",
     "name" : "leila",
-    "pronouns" : "she/her",
+    "pronouns" : "she/her"
 }
 **username must be unique. All other fields are not nullable. Successful request returns welcome message.
 
-../api/auth/login 
+POST ../api/auth/login 
 
 Log in with existing credentials. Use following payload:
 
@@ -33,6 +33,7 @@ Log in with existing credentials. Use following payload:
 
 Username and password must already exist in the database. Create new user with the ../api/user/register route if necessary. Returns welcome message and token. 
 
-../api/auth/logout
+GET ../api/auth/logout
 
 Log out the currently logged in user. A user must be logged in with active token for this route to work.
+

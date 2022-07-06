@@ -19,8 +19,8 @@ function findById(id) {
 }
 
 
-function update(id, user) {
-  return db("users").update(user).where({ id });
+function update(id, time) {
+  return db("members as m").update("logged_out_time", time).where("m.member_id", id);
 }
 
 async function add(member) {

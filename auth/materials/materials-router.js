@@ -2,6 +2,7 @@ const router = require("express").Router();
 
 const Material = require("./materials-model");
 const { restricted } = require("../auth-middleware");
+
 router.get("/", restricted, async (req, res, next) => {
   let materials = await Material.getMaterials();
   res.status(200).json(materials);
@@ -25,11 +26,11 @@ router.get("/:id/your-materials", restricted, async (req, res, next) => {
 });
 
 router.post("/", restricted, (req, res, next) => {
-  console.log(JSON.stringify(req.decodedJwt));
+  console.log("here");
   Material.createMaterial(req.body, req.decodedJwt.member_id)
     .then((newMaterial) => {
-      let resp = "Thank you for submitting a material";
       res.status(200).json(newMaterial);
+      let resp = "Thank you for submitting a material";
     })
     .catch(next);
 });

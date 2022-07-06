@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const { restricted } = require("./auth-middleware");
+const  { restricted } = require("./auth-middleware");
 
 const router = require("express").Router();
 const User = require("../users/users-model.js");
@@ -42,16 +42,17 @@ router.post("/login", (req, res, next) => {
 
 router.get("/logout", restricted, async (req, res, next) => {
   const logged_out_time = Math.floor(new Date().getTime() / 1000);
-  await User.update(req.decodedJwt.subject, { logged_out_time });
+  await User.update(req.decodedJwt.member_id, { logged_out_time });
   res.json("successfully logged out");
 });
 
 
-
 function generateToken(user) {
+  console.log(user)
   const payload = {
     member_id: user.member_id,
     username: user.username,
+    password: user.password
   };
   const options = {
     expiresIn: "1d",

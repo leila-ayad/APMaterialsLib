@@ -34,7 +34,7 @@ router.post("/login", (req, res, next) => {
           token,
         });
       } else {
-        next({ status: 401, message: "Invalid Credentials" });
+        next({ status: 401, message: "Please enter valid credentials" });
       }
     })
     .catch(next);

@@ -24,6 +24,11 @@ function update(id, time) {
 }
 
 async function add(member) {
-  const [id] = await db("members").insert(member);
-  return findById(id);
+  if (!member) {
+    const [id] = await db("members").insert(member);
+    return findById(id);
+  } else {
+    return "Username Taken"
+  }
+
 }

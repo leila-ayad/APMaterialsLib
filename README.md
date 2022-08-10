@@ -62,6 +62,10 @@ GET ../api/materials/{:id}/your-materials
 
 Retrieves the materials that belong to a specific logged-in member. The :id in the URL refers to the member_id.
 
+GET ../api/materials/img/:id
+
+Retrieves the images uploaded for a certain material. The :id should reference the material_id all though it doesn't as of 8/10/22
+
 
 POST ../api/materials/
 
@@ -70,6 +74,10 @@ Adds a new materials to the database. This is a restricted route. User must be l
 Use the following payload:
 
 { "material_name": "yarn", "material_description": "wooly sheepy", "material_unit": "20 yards", "contact_method": "instagram : 9314142321"}
+
+POST ../api/materials/upload/
+
+Adds an image for a material being added to the database. Image is stored in the images db table as a blob. 
 
 PUT ../api/materials/:id
 

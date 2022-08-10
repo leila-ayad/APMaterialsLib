@@ -26,11 +26,22 @@ function findUsersMaterials(id) {
   return db("materials").where("materials.member_id", id)
 }
 
+async function uploadPhoto(name, data) {
+  const image = await db("images").insert({image_name: name, image: data});
+  return image
+}
+
+async function getPhotos(id) {
+  return db("images").where({image_id: id}).first();
+}
+
 module.exports = {
   getMaterials,
   getById,
   createMaterial,
   updateMaterial,
   deleteMaterial,
-  findUsersMaterials
+  findUsersMaterials,
+  uploadPhoto,
+  getPhotos
 };

@@ -85,5 +85,7 @@ Notes
 
 --including images with express/knex
 https://www.youtube.com/watch?v=SAUvlkTDMM4
+--good little vid on the sqlite ext 
+https://www.youtube.com/watch?v=bKixKfb1J1o
 
 

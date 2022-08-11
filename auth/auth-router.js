@@ -7,24 +7,28 @@ const router = require("express").Router();
 const User = require("../users/users-model.js");
 
 const { BCRYPT_ROUNDS, JWT_SECRET } = require("../config");
+const e = require("express");
 
 router.post("/register", (req, res, next) => {
   let user = req.body;
   // bcrypting the password before saving
   const hash = bcrypt.hashSync(user.password, BCRYPT_ROUNDS);
-  // never save the plain text password in the db
   user.password = hash;
-
   User.add(user)
     .then((saved) => {
-      res.status(201).json({ message: `Great to have you, ${saved.username}` });
+      if(saved) {
+        res.status(201).json({ message: `Great to have you, ${saved.username}` });
+      }
+      else {
+        res.status(400).json({message: `${user.username} is already taken`})
+      }
     })
-    .catch(next); // our custom err handling middleware in server.js will trap this
+    // our custom err handling middleware in server.js traps all other errors with code 500
+    .catch(next); 
 });
 
 router.post("/login", (req, res, next) => {
   let { username, password } = req.body;
-
   User.findBy({ username })
     .then(([user]) => {
       if (user && bcrypt.compareSync(password, user.password)) {

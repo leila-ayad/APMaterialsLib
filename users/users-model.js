@@ -24,13 +24,13 @@ function update(id, time) {
 }
 
 
-//onConflict and ignore were added to make the add model return something in the case that the SQL query failed. This made it deliver a meaningful error message to the FE
+//onConflict and ignore were added to silently drop the query and prevent an error from being thrown so a meaningful error could be returned via the auth/register API
 async function add(member) {
     const [id] = await db("members").insert({...member}).onConflict().ignore()
     return findById(id);
 }
 
-//this is the version of the add model that existed before I fixed the duplicate username problem()
+//this is the version of the add model that existed before I fixed the duplicate username problem...just in case something goes wrong
 // async function add(member) {
 //   if (member) {
 //     const [id] = await db("members").insert({...member}).onConflict().ignore

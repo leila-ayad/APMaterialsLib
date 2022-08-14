@@ -13,6 +13,7 @@ router.post("/register", (req, res, next) => {
   let user = req.body;
   // bcrypting the password before saving
   const hash = bcrypt.hashSync(user.password, BCRYPT_ROUNDS);
+  // never save the plain text password in the db
   user.password = hash;
   User.add(user)
     .then((saved) => {
@@ -36,6 +37,8 @@ router.post("/login", (req, res, next) => {
         res.status(200).json({
           message: `Welcome back ${user.username}...`,
           token,
+          username,
+          member_id: user.member_id
         });
       } else {
         next({ status: 401, message: "Please enter valid credentials" });

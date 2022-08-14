@@ -15,7 +15,8 @@ exports.up = async function (knex) {
       tbl.string("material_name").notNullable();
       tbl.string("material_description");
       tbl.string("material_unit").notNullable();
-      tbl.string("contact_method").notNullable();
+      tbl.string("phone_number");
+      tbl.string("email");
       tbl
         .integer("member_id")
         .unsigned()

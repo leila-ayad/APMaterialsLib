@@ -34,7 +34,6 @@ router.get("/img/:id", async (req, res) => {
 });
 
 router.post("/", restricted, (req, res, next) => {
-  console.log("here");
   Material.createMaterial(req.body, req.decodedJwt.member_id)
     .then((newMaterial) => {
       res.status(200).json(newMaterial);
@@ -46,7 +45,6 @@ router.post("/", restricted, (req, res, next) => {
 //include member_id when uploading to database after restricting the route. Do after sorting out state with JWT
 router.post("/upload", async (req, res) => {
   const image = req.files.pic;
-  console.log(req)
   const id = req.decodedJwt.member_id
   Material.uploadPhoto(image.name, image.data).then((newImage) => {
     res.status(200).json("successful upload");

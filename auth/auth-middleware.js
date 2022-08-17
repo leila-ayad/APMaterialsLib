@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET } = require("../config");
+const { ACCESS_TOKEN_SECRET } = require("../config");
 
 const User = require("../users/users-model");
 
@@ -7,10 +7,9 @@ const User = require("../users/users-model");
 const restricted = (req, res, next) => {
   const token = req.headers.authorization.split(' ')[1];
   if(token) {
-    jwt.verify(token, JWT_SECRET, (err, decodedJwt) => {
+    jwt.verify(token, ACCESS_TOKEN_SECRET, (err, decodedJwt) => {
       if(err) {
-        
-        next({ status: 401, message: 'invalid jwt' });
+        next({ status: 403, message: 'invalid jwt' });
       } else {
         User.findById(decodedJwt.member_id)
           .then(user => {

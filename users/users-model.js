@@ -4,7 +4,8 @@ const db = require("../data/dbConfig");
 module.exports = {
   findBy,
   findById,
-  update,
+  updateLogout,
+  updateRefresh,
   add,
 };
 
@@ -18,16 +19,26 @@ function findById(id) {
   return db("members as m").where("m.member_id", id).first();
 }
 
-
-function update(id, time) {
-  return db("members as m").update("logged_out_time", time).where("m.member_id", id);
+function updateLogout(id, time) {
+  return db("members as m")
+    .update("m.logged_out_time", time)
+    .where("m.member_id", id);
 }
 
+async function updateRefresh(id, token) {
+  const refreshToken = await db("members as m")
+    .update("refresh_token", token)
+    .where("member_id", id);
+    return refreshToken
+}
 
 //onConflict and ignore were added to silently drop the query and prevent an error from being thrown so a meaningful error could be returned via the auth/register API
 async function add(member) {
-    const [id] = await db("members").insert({...member}).onConflict().ignore()
-    return findById(id);
+  const [id] = await db("members")
+    .insert({ ...member })
+    .onConflict()
+    .ignore();
+  return findById(id);
 }
 
 //this is the version of the add model that existed before I fixed the duplicate username problem...just in case something goes wrong

@@ -8,6 +8,7 @@ exports.up = async function (knex) {
       tbl.string("name", 126).notNullable();
       tbl.string("pronouns").notNullable();
       tbl.integer("logged_out_time");
+      tbl.string("refresh_token", 500)
     })
 
     .createTable("materials", (tbl) => {

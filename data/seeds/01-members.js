@@ -9,6 +9,7 @@ exports.seed = function (knex, Promise) {
       email: "fakeemail@df.com",
       name: "leila",
       pronouns: "she/her",
+      refresh_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZW1iZXJfaWQiOjEsInVzZXJuYW1lIjoibGVpbGEiLCJwYXNzd29yZCI6IiQyeSQxMCRUM1cuVy9ZTmoxeUtibGU2N3JQMDcuMWpJUDJ4VVlvNnRKaGJDd3lPWFdaRTRXMnUucklKSyIsImxvZ2dlZF9vdXRfdGltZSI6bnVsbCwiaWF0IjoxNjYwNjAyODI1LCJleHAiOjE2NjA2ODkyMjV9.3EamoSNSuyzDmeB0iMeAi_Znfh4PeqPHzJ59GcvcHUU"
     },
     {
       username: "brandon",

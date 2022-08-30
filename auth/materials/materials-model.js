@@ -10,7 +10,14 @@ const getById = (material_id) => {
 };
 
 async function createMaterial(material, memberId) {
-  const [id] = await db("materials").insert({...material, member_id: memberId});
+
+  const [id] = await db("materials").insert({
+    material_name: material.material_name,
+    material_description: material.material_description,
+    material_unit: material.material_unit,
+    phone_number: material.phone_number,
+    email: material.email,
+    member_id: memberId});
   return getById(id);
 }
 
@@ -22,18 +29,19 @@ async function deleteMaterial(id) {
   return db("materials").where("material_id", id).del();
 }
 
-function findUsersMaterials(id) {
-  return db("materials").where("materials.member_id", id)
+async function findUsersMaterials(id) {
+  const materials = await db("materials").where("materials.member_id", id)
+  return materials
 }
 
-async function uploadPhoto(name, data) {
-  const image = await db("images").insert({image_name: name, image: data});
+async function insertPhoto(name, material_id) {
+  const image = await db("images").insert({image_name: name, material_id: material_id });
   return image
 }
 
-async function getPhotos(id) {
-  return db("images").where({image_id: id}).first();
-}
+// async function getPhotos(id) {
+//   return db("images").where({image_id: id}).first();
+// }
 
 module.exports = {
   getMaterials,
@@ -42,6 +50,6 @@ module.exports = {
   updateMaterial,
   deleteMaterial,
   findUsersMaterials,
-  uploadPhoto,
-  getPhotos
+  insertPhoto
+  // getPhotos
 };

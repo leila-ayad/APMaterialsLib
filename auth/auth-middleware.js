@@ -1,32 +1,19 @@
 const jwt = require("jsonwebtoken");
-const { ACCESS_TOKEN_SECRET } = require("../config");
 
 const User = require("../users/users-model");
 
 // AUTHENTICATION
 const restricted = (req, res, next) => {
-  const token = req.headers.authorization.split(' ')[1];
-  if(token) {
-    jwt.verify(token, ACCESS_TOKEN_SECRET, (err, decodedJwt) => {
-      if(err) {
-        next({ status: 403, message: 'invalid jwt' });
-      } else {
-        User.findById(decodedJwt.member_id)
-          .then(user => {
-            if(user.logged_out_time > decodedJwt.iat) {
-              next({ status: 401, message: 'user was logged out' });
-            } else {
-              req.decodedJwt = decodedJwt;
-              next();
-            }
-          });
-      }
-    })
-
-  } else {
-    next({ status: 401, message: 'this endpoint is restricted!' });
-  }
-}
+  const authHeader = req.headers.authorization || req.headers.Authorization;
+  if (!authHeader?.startsWith("Bearer ")) return res.sendStatus(401);
+  const token = authHeader.split(" ")[1];
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+    if (err) return res.sendStatus(403); //invalid token
+    req.user = decoded.username;
+    req.member_id = decoded.member_id
+    next();
+  });
+};
 
 const checkUser = (userId) => (req, res, next) => {
   if (req.decodedJwt && req.decodedJwt.member_id == userId) {

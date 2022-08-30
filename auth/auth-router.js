@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const express = require("express")
 
 const { restricted } = require("./auth-middleware");
 
@@ -7,8 +8,6 @@ const router = require("express").Router();
 const User = require("../users/users-model.js");
 
 const { BCRYPT_ROUNDS, JWT_SECRET } = require("../config");
-const e = require("express");
-const { response } = require("express");
 
 router.post("/register", (req, res, next) => {
   let user = req.body;
@@ -36,26 +35,27 @@ router.post("/login", (req, res, next) => {
     .then(([user]) => {
       if (user && bcrypt.compareSync(password, user.password)) {
         const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
-          expiresIn: "30s",
+          expiresIn: "1d",
         });
-        console.log(accessToken)
         const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, {
           expiresIn: "1d",
         });
         const member_id = user.member_id;
         User.updateRefresh(member_id, refreshToken);
         //maxAge math comes out to 1d
-        res.cookie("jwt", refreshToken, {
+        res.cookie('jwt', refreshToken, {
           httpOnly: true,
+          secure: true,
+          sameSite: 'None',
           maxAge: 24 * 60 * 60 * 1000,
         });
+        console.log(res.cookie);
         res.status(200).json({
           message: `Welcome back ${user.username}...`,
           accessToken,
-          username,
+          username: user.username,
           member_id: user.member_id,
         });
-
       } else {
         next({ status: 401, message: "Please enter valid credentials" });
       }
@@ -63,14 +63,16 @@ router.post("/login", (req, res, next) => {
     .catch(next);
 });
 
-router.get("/refresh", (req, res, next) => {
+router.get("/refresh", async (req, res, next) => {
   const cookies = req.cookies;
-  let { username } = req.body;
-  User.findBy({ username }).then(() => {});
+  if (!cookies?.jwt) return res.sendStatus(401);
   const refreshToken = cookies.jwt;
+
+  const foundUser = await User.findBy({ refreshToken }).exec();
+  if (!foundUser) return res.sendStatus(403);
   //evaluate JWT
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
-    if (err || username !== decoded.username) return res.status(403);
+    if (err || foundUser.username !== decoded.username) return res.status(403);
     const accessToken = jwt.sign(
       { username: decoded.username },
       process.env.ACCESS_TOKEN_SECRET,

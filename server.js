@@ -1,5 +1,6 @@
 const express = require("express");
-const fileUpload = require("express-fileupload");
+const path = require("path")
+const multer = require("multer")
 
 const credentials = require("./middleware/credentials");
 
@@ -9,19 +10,19 @@ const  corsOptions = require("./config/corsOptions");
 const usersRouter = require("./users/users-router");
 const materialsRouter = require("./auth/materials/materials-router");
 const authRouter = require("./auth/auth-router.js");
-const { default: knex } = require("knex");
+
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
 const server = express();
 
+
 server.use(credentials);
 
 server.use(cors(corsOptions));
 
-server.use(fileUpload());
-
 server.use(bodyParser.urlencoded({ extended: false }));
+server.use(bodyParser.json({ limit: '50mb'}))
 
 server.use(express.json());
 

@@ -10,13 +10,13 @@ module.exports = {
 };
 
 async function findBy(filter) {
-  return db("members as m")
+  return await db("members as m")
     .select("m.member_id", "m.username", "m.password", "logged_out_time")
     .where(filter);
 }
 
-function findById(id) {
-  return db("members as m").where("m.member_id", id).first();
+async function findById(id) {
+  return await db("members as m").where("m.member_id", id);
 }
 
 function updateLogout(id, time) {

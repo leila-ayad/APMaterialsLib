@@ -8,7 +8,7 @@ exports.up = async function (knex) {
       tbl.string("name", 126).notNullable();
       tbl.string("pronouns").notNullable();
       tbl.integer("logged_out_time");
-      tbl.string("refresh_token", 500);
+      tbl.string("refresh_token", 500)
     })
 
     .createTable("materials", (tbl) => {
@@ -18,6 +18,7 @@ exports.up = async function (knex) {
       tbl.string("material_unit").notNullable();
       tbl.string("phone_number");
       tbl.string("email");
+      tbl.string("image_name")
       tbl
         .integer("member_id")
         .unsigned()
@@ -27,16 +28,17 @@ exports.up = async function (knex) {
     })
 
     //this set up DOESNT link the image to a certain material. need to include the foreign key for material_id
-    .createTable("images", (tbl) => {
-      tbl.increments("image_id").notNullable().unique();
-      tbl.string("image_name").notNullable();
-      tbl.integer("material_id").unsigned().references("materials.material_id").onDelete("RESTRICT").onUpdate("CASCADE");
-    });
+    // .createTable("", (tbl) => {
+    //   tbl.increments("image_id").notNullable().unique();
+    //   tbl.string("image_name").notNullable();
+    //   tbl.blob("image").notNullable();
+    //   tbl.integer("material_id").unsigned().references("materials.material_id").onDelete("RESTRICT").onUpdate("CASCADE");
+    // })
 };
 
 exports.down = function (knex) {
   return knex.schema
     .dropTableIfExists("materials")
     .dropTableIfExists("members")
-    .dropTableIfExists("images");
+
 };

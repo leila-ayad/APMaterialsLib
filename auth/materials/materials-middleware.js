@@ -8,15 +8,14 @@ const storage = multer.diskStorage({
     cb(null, "./Uploads");
   },
   filename: (req, file, cb) => {
-    cb(null, path.extname(file.originalname) + Date.now() + ".jpg");
+    cb(null, Date.now().toString()+ ".jpg");
   },
 });
 // Define the maximum size for uploading
 // picture i.e. 1 MB. it is optiona
 
-const upload = multer({   storage: storage })
-
+const upload = multer({ storage: storage });
 
 module.exports = {
-  upload
+  upload,
 };

@@ -22,7 +22,7 @@ server.use(credentials);
 server.use(cors(corsOptions));
 
 server.use(bodyParser.urlencoded({ extended: false }));
-server.use(bodyParser.json({ limit: '50mb'}))
+
 
 server.use(express.json());
 

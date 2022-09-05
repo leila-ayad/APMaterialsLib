@@ -21,8 +21,8 @@ async function findById(id) {
 
 function updateLogout(id, time) {
   return db("members as m")
-    .update("m.logged_out_time", time)
-    .where("m.member_id", id);
+    .update("logged_out_time", time)
+    .where("member_id", id);
 }
 
 async function updateRefresh(id, token) {

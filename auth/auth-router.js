@@ -83,8 +83,9 @@ router.get("/refresh", async (req, res, next) => {
 });
 
 router.get("/logout", restricted, async (req, res, next) => {
+  console.log(req.user)
   const logged_out_time = Math.floor(new Date().getTime() / 1000);
-  await User.update(req.decodedJwt.member_id, { logged_out_time });
+  await User.updateLogout(req.member_id, { logged_out_time });
   res.json("successfully logged out");
 });
 

@@ -3,13 +3,18 @@ const Material = require("./materials-model");
 const { restricted } = require("../auth-middleware");
 const { upload } = require("./materials-middleware");
 const fs = require("fs");
+const util = require("util")
+const unlinkFile = util.promisify(fs.unlink)
+
+const { uploadFile, getFileStream } = require("../../s3")
 
 router.get("/", restricted, async (req, res, next) => {
   let materials = await Material.getMaterials();
   res.status(200).json(materials);
+ 
 });
 
-router.get("/:id", restricted, async (req, res, next) => {
+router.get("/:id", restricted,  async (req, res, next) => {
   let material = await Material.getById(req.params.id, req.body);
   if (material) {
     res.status(200).json(material);
@@ -23,40 +28,25 @@ router.get("/:id/your-materials", restricted, async (req, res, next) => {
   res.status(200).json(materials);
 });
 
-//make sure :id refers to the material_id
-router.get("/img/:id", async (req, res) => {
-  const id = req.params.id;
-  let images = await Material.getPhotos(id);
-  if (images) {
-    res.end(images.image);
-  } else {
-    res.end("No images for this material");
-  }
-});
 
-router.post("/", restricted, upload.single("image"), (req, res, next) => {
-  Material.createMaterial(req.body, req.member_id).then((newMaterial) => {
-
-    let dir = `./Uploads/${req.member_id}/`;
-
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    let oldPath = `./Uploads/${req.file.filename}`;
-    var newPath = `./Uploads/${req.member_id}/${req.file.filename}`;
-
-    fs.rename(oldPath, newPath, function (err) {
-      if (err) {
-        console.log(err);
-      }
-
-      Material.insertPhoto(req.file.filename, newMaterial.material_id);
-
-      res.status(200).json(newMaterial);
-    });
+router.post("/", restricted, upload.single("image"),  async (req, res, next) => {
+  Material.createMaterial(req.body, req.member_id, req.file.filename).then((newMaterial) => {  
+    //res.status(200).json(newMaterial);
   });
+  const file = req.file
+  console.log("in post?")
+  const result = await uploadFile(file)
+  await unlinkFile(file.path)
+   res.status(200).json({imagePath: `/images/${result.Key}`})
+
 });
 
+router.get('/images/:key', (req, res) => {
+  const key = req.params.key
+  const readStream = getFileStream(key)
+  res.setHeader("Content-Type", "application/json");
+  readStream.pipe(res)
+})
 
 router.put("/:id", restricted, async (req, res, next) => {
   try {

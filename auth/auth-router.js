@@ -11,17 +11,18 @@ const { BCRYPT_ROUNDS, JWT_SECRET } = require("../config");
 
 router.post("/register", (req, res, next) => {
   let user = req.body;
+
   // bcrypting the password before saving
   const hash = bcrypt.hashSync(user.password, BCRYPT_ROUNDS);
-  // never save the plain text password in the db
   user.password = hash;
   User.add(user)
     .then((saved) => {
       if (saved) {
         res
           .status(201)
-          .json({ message: `Great to have you, ${saved.username}` });
+          .json({ message: `User Created! Head to the "Login" page to log in` });
       } else {
+        console.log("here")
         res.status(400).json({ message: `${user.username} is already taken` });
       }
     })
@@ -86,7 +87,7 @@ router.get("/logout", restricted, async (req, res, next) => {
   console.log(req.user)
   const logged_out_time = Math.floor(new Date().getTime() / 1000);
   await User.updateLogout(req.member_id, { logged_out_time });
-  res.json("successfully logged out");
+  res.json("Logout Successful");
 });
 
 module.exports = router;

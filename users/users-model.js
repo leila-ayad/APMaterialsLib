@@ -16,7 +16,8 @@ async function findBy(filter) {
 }
 
 async function findById(id) {
-  return await db("members as m").where("m.member_id", id);
+  const saved = await db("members as m").where("m.member_id", id);
+  return saved
 }
 
 function updateLogout(id, time) {

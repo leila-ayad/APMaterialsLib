@@ -28,16 +28,21 @@ router.get("/:id/your-materials", restricted, async (req, res, next) => {
 });
 
 router.post("/", restricted, upload.single("image"), async (req, res, next) => {
-  Material.createMaterial(req.body, req.member_id, req.file.filename).then(
-    (newMaterial) => {
-      //res.status(200).json(newMaterial);
-    }
-  );
-  const file = req.file;
-  console.log("in post?");
-  const result = await uploadFile(file);
-  await unlinkFile(file.path);
-  res.status(200).json({ message: "Material successfully added" });
+  if (req.body && req.member_id && req.file) {
+    Material.createMaterial(req.body, req.member_id, req.file.filename).then(
+      (newMaterial) => {
+        //res.status(200).json(newMaterial);
+      }
+    );
+    const file = req.file;
+    console.log("in post?");
+    const result = await uploadFile(file);
+    await unlinkFile(file.path);
+    res.status(200).json({ message: "Material successfully added" });
+  } else {
+    res.status(500).json({message: "Something is missing...."})
+  }
+ 
 });
 
 router.get("/images/:key", (req, res) => {
@@ -53,6 +58,7 @@ router.put("/:id", restricted, async (req, res, next) => {
     let updatedMaterial = await Material.getById(req.params.id);
     res.status(200).json({ message: "Successfully Updated" });
   } catch (err) {
+    console.log(err)
     next(err);
   }
 });
@@ -61,7 +67,7 @@ router.delete("/:id", restricted, async (req, res, next) => {
   try {
     await Material.deleteMaterial(req.params.id);
     const id = req.params.id
-    res.status(200).json({ message: "Successfully deleted", id: id });
+    res.status(200).json({ message: "Successfully Deleted", id: id });
   } catch (err) {
     next(err);
   }

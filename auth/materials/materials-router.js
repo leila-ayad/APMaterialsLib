@@ -73,4 +73,6 @@ router.delete("/:id", restricted, async (req, res, next) => {
   }
 });
 
+
+console.log("git isnt working so I need to commit")
 module.exports = router;

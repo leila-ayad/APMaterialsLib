@@ -40,7 +40,7 @@ router.post("/", restricted, upload.single("image"), async (req, res, next) => {
     await unlinkFile(file.path);
     res.status(200).json({ message: "Material successfully added" });
   } else {
-    res.status(500).json({message: "Something is missing...."})
+    res.status(500).json({message: "Something is missing...check that all fields are properly completed"})
   }
  
 });
@@ -73,6 +73,4 @@ router.delete("/:id", restricted, async (req, res, next) => {
   }
 });
 
-
-console.log("git isnt working so I need to commit")
 module.exports = router;

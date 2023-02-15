@@ -1,3 +1,4 @@
+//help with creating the postgres heroku connection from this blog post https://dev.to/easybuoy/setting-up-a-node-api-with-postgres-and-knex-588f
 // const configurations = {
 //   client: "pg",
 //   connection: {

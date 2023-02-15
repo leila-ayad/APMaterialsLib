@@ -1,5 +1,6 @@
 require('dotenv').config()
 
+
 const sharedConfig = {
   client: "pg",
   connection: {

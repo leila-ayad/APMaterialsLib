@@ -1,5 +1,8 @@
 
+
+
 exports.up = async function (knex) {
+
   await knex.schema
     .createTable("members", (tbl) => {
       tbl.increments("member_id").notNullable();

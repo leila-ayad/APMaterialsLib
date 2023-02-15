@@ -1,11 +1,13 @@
+require('dotenv').config()
+
 const sharedConfig = {
   client: "pg",
   connection: {
-    host: "ec2-3-217-251-77.compute-1.amazonaws.com",
-    user: "zevipxarlcmcpu",
+    host: "ec2-3-229-165-146.compute-1.amazonaws.com",
+    user: "qwlhxbcknduwdd",
     password:
-      "cecace2b5e44e068a4d5790a2627e6d19f927e0587236172688bdfe7c30166d1",
-    database: "dfvf3dlr0da74a",
+      "811094ca0cc6910da720492a9bed1ad49fc059ed428f7516cc9ad6c780192dca",
+    database: "d1rpci2od3jqi6",
   },
   useNullAsDefault: true,
   migrations: { directory: "./data/migrations" },
@@ -18,5 +20,8 @@ module.exports = {
   development: {
     ...sharedConfig,
     seeds: { directory: "./data/seeds" },
+  },
+  production: {
+    ...sharedConfig
   }
 };

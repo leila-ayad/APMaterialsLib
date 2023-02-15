@@ -1,20 +1,30 @@
-const configurations = {
-  client: "pg",
-  connection: {
-    host: "ec2-3-229-165-146.compute-1.amazonaws.com",
-    user: "qwlhxbcknduwdd",
-    password:
-      "811094ca0cc6910da720492a9bed1ad49fc059ed428f7516cc9ad6c780192dca",
-    database: "d1rpci2od3jqi6",
-  },
-  useNullAsDefault: true,
-  migrations: { directory: "./data/migrations" },
-  pool: {
-    afterCreate: (conn, done) => conn.run("PRAGMA foreign_keys = ON", done),
-  },
-};
-const environment = process.env.NODE_ENV || "development";
+// const configurations = {
+//   client: "pg",
+//   connection: {
+//     host: "ec2-3-229-165-146.compute-1.amazonaws.com",
+//     user: "qwlhxbcknduwdd",
+//     password:
+//       "811094ca0cc6910da720492a9bed1ad49fc059ed428f7516cc9ad6c780192dca",
+//     database: "d1rpci2od3jqi6",
+//   },
+//   useNullAsDefault: true,
+//   migrations: { directory: "./data/migrations" },
+//   pool: {
+//     afterCreate: (conn, done) => conn.run("PRAGMA foreign_keys = ON", done),
+//   },
+// };
+// const env = process.env.NODE_ENV || "development";
 
-const knex = require("knex")(configurations[environment]);
+// const knex = require("knex")(configurations[env]);
 
-module.exports = knex;
+// module.exports = knex;
+
+const knex = require('knex');
+
+const knexfile = require('../knexfile');
+
+
+const env = process.env.NODE_ENV || 'development';
+const configOptions = knexfile[env];
+
+module.exports = knex(configOptions);

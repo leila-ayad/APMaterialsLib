@@ -20,12 +20,12 @@ const server = express();
 
 server.use(credentials);
 
-//server.use(cors(corsOptions));
+server.use(cors(corsOptions));
 
 server.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*'); // replace * with your domain name
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  res.header('Access-Control-Allow-Origin', 'https://intense-island-04875.herokuapp.com');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
 

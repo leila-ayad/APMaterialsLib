@@ -18,19 +18,19 @@ const cookieParser = require("cookie-parser");
 
 const server = express();
 
-server.use(function (req, res, next) {
-  res.header(
-    "Access-Control-Allow-Origin",
-    "https://intense-island-04875.herokuapp.com"
-  );
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  res.status(200);
-  next();
-});
+// server.use(function (req, res, next) {
+//   res.header(
+//     "Access-Control-Allow-Origin",
+//     "https://intense-island-04875.herokuapp.com"
+//   );
+//   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept"
+//   );
+//   res.status(200);
+//   next();
+// });
 
 server.use(credentials);
 

@@ -8,6 +8,8 @@ const credentials = require("./middleware/credentials");
 const cors = require("cors");
 const  corsOptions = require("./config/corsOptions");
 
+console.log('here')
+
 const usersRouter = require("./users/users-router");
 const materialsRouter = require("./auth/materials/materials-router");
 const authRouter = require("./auth/auth-router.js");
@@ -24,7 +26,7 @@ server.use(credentials);
 server.use(cors(corsOptions));
 
 server.use(function(req, res, next) {
-  console.log('here')
+
   res.header('Access-Control-Allow-Origin', 'https://intense-island-04875.herokuapp.com');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');

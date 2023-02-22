@@ -20,7 +20,7 @@ const server = express();
 
 server.use(credentials);
 
-server.use(cors(corsOptions));
+//server.use(cors(corsOptions));
 
 server.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*'); // replace * with your domain name

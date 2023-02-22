@@ -22,6 +22,13 @@ server.use(credentials);
 
 server.use(cors(corsOptions));
 
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*'); // replace * with your domain name
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
+
 //urlencoded for accepting form data
 server.use(bodyParser.urlencoded({ extended: false }));
 

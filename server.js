@@ -15,6 +15,7 @@ const authRouter = require("./auth/auth-router.js");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
+
 const server = express();
 
 
@@ -23,6 +24,7 @@ server.use(credentials);
 server.use(cors(corsOptions));
 
 server.use(function(req, res, next) {
+  console.log('here')
   res.header('Access-Control-Allow-Origin', 'https://intense-island-04875.herokuapp.com');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');

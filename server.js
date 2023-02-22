@@ -22,6 +22,7 @@ server.use(credentials);
 
 server.use(cors(corsOptions));
 
+//urlencoded for accepting form data
 server.use(bodyParser.urlencoded({ extended: false }));
 
 

@@ -52,11 +52,14 @@ router.get("/images/:key", (req, res) => {
   readStream.pipe(res);
 });
 
+//Added the redirect on line 62. Unsure if it will work. 2/21/23
+
 router.put("/:id", restricted, async (req, res, next) => {
   try {
     await Material.updateMaterial(req.params.id, req.body);
     let updatedMaterial = await Material.getById(req.params.id);
     res.status(200).json({ message: "Successfully Updated" });
+    res.redirect('/')
   } catch (err) {
     console.log(err)
     next(err);

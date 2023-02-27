@@ -1,9 +1,7 @@
-// const allowedOrigins = require("./allowedOrigins");
-
-// "https://intense-island-04875.herokuapp.com" || 
+const allowedOrigins = require("./allowedOrigins");
 
 const corsOptions = {
-  origin: "https://www.abstractpicnicmaterials.com",
+  origin: "https://intense-island-04875.herokuapp.com",
   //  (origin, callback) => {
   //   if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
   //     callback(null, true);

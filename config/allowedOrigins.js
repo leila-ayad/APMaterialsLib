@@ -1,6 +1,7 @@
 const allowedOrigins = [
     'https://intense-island-04875.herokuapp.com/',
     'https://intense-island-04875.herokuapp.com/register',
+    'https://www.abstractpicnicmaterials.com',
     'http://127.0.0.1:5500',
     'http://localhost:3000/register',
     'http://localhost:3000',

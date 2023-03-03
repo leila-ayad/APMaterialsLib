@@ -22,6 +22,16 @@ server.use(credentials);
 
 server.use(cors(corsOptions));
 
+// Add Access Control Allow Origin headers
+server.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "https://www.abstractpicnicmaterials.com");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
 //urlencoded for accepting form data
 server.use(bodyParser.urlencoded({ extended: false }));
 

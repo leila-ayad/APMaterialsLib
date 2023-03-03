@@ -17,11 +17,6 @@ const cookieParser = require("cookie-parser");
 
 const server = express();
 
-
-server.use(credentials);
-
-// server.use(cors(corsOptions));
-
 // Add Access Control Allow Origin headers
 server.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "https://www.abstractpicnicmaterials.com");
@@ -29,8 +24,15 @@ server.use((req, res, next) => {
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
   );
+
+  console.log(res.header)
   next();
 });
+
+server.use(credentials);
+
+server.use(cors(corsOptions));
+
 
 //urlencoded for accepting form data
 server.use(bodyParser.urlencoded({ extended: false }));

@@ -1,16 +1,19 @@
 require('dotenv').config()
 
-const { Client } = require('pg');
+'use strict';
 
-const client = new Client({
-  connectionString: process.env.DB_URL,
+const pg = require('pg');
+const SocksConnection = require('socksjs');
+
+// const client = new Client({
+//   connectionString: process.env.DB_URL,
   
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+//   ssl: {
+//     rejectUnauthorized: false
+//   }
+// });
 
-client.connect();
+// client.connect();
 
 const sharedConfig = {
   client: "pg",
@@ -27,6 +30,45 @@ const sharedConfig = {
     afterCreate: (conn, done) => conn.run("PRAGMA foreign_keys = ON", done),
   },
 };
+
+const fixieUrl = process.env.FIXIE_SOCKS_HOST;
+const fixieValues = fixieUrl.split(new RegExp('[/(:\\/@)/]+'));
+
+const pgServer = {
+  host: 'ec2-3-229-165-146.compute-1.amazonaws.com',
+  port: 5432
+};
+
+const fixieConnection = new SocksConnection(pgServer, {
+  user: fixieValues[0],
+  pass: fixieValues[1],
+  host: fixieValues[2],
+  port: fixieValues[3],
+});
+
+const connectionConfig = {
+  user: "qwlhxbcknduwdd",
+  password: "811094ca0cc6910da720492a9bed1ad49fc059ed428f7516cc9ad6c780192dca",
+  database: "d1rpci2od3jqi6",
+  stream: fixieConnection,
+  ssl: true // Optional, depending on db config
+};
+
+var client = new pg.Client(connectionConfig);
+
+client.connect(function (err) {
+  if (err) throw err;
+  client.query('SELECT 1+1 as test1', function (err, result) {
+    if (err) throw err;
+    console.log(result.rows[0]);
+    console.log("here in the knexfile")
+    client.end(function (err) {
+      if (err) throw err;
+    });
+  });
+});
+
+
 
 module.exports = {
   development: {

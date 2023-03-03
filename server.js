@@ -20,7 +20,7 @@ const server = express();
 
 server.use(credentials);
 
-server.use(cors(corsOptions));
+// server.use(cors(corsOptions));
 
 // Add Access Control Allow Origin headers
 server.use((req, res, next) => {

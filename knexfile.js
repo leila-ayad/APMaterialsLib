@@ -1,39 +1,30 @@
-require('dotenv').config()
-
-const { Client } = require('pg');
-
-const client = new Client({
-  connectionString: process.env.DB_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
-
-client.connect();
-
-const sharedConfig = {
-  client: "pg",
-  connection: {
-    host: "ec2-3-229-165-146.compute-1.amazonaws.com",
-    user: "qwlhxbcknduwdd",
-    password:
-      "811094ca0cc6910da720492a9bed1ad49fc059ed428f7516cc9ad6c780192dca",
-    database: "d1rpci2od3jqi6",
-    
-  },
-  useNullAsDefault: true,
-  migrations: { directory: "./data/migrations" },
+const development = {
+client: "sqlite3",
+useNullAsDefault: true,
+connection: {
+  filename: "./data/database.db3"
+},
   pool: {
     afterCreate: (conn, done) => conn.run("PRAGMA foreign_keys = ON", done),
+  }
+}
+
+
+const production = {
+  client: "pg",
+  connection: process.env.DATABASE_URL,
+
+  pool: {
+    min: 2,
+    max: 10,
+  },
+  migrations: {
+    tablename: "knex_migrations",
+    directory: "./data/migrations",
   },
 };
 
 module.exports = {
-  development: {
-    ...sharedConfig,
-    seeds: { directory: "./data/seeds" },
-  },
-  production: {
-    ...sharedConfig
-  }
+  development: development,
+  production: production,
 };

@@ -4,7 +4,6 @@ const { Client } = require('pg');
 
 const client = new Client({
   connectionString: process.env.DB_URL,
-  
   ssl: {
     rejectUnauthorized: false
   }
@@ -13,7 +12,7 @@ const client = new Client({
 client.connect();
 
 const sharedConfig = {
-  client: "pg",
+  client: client,
   connection: {
     host: "ec2-3-229-165-146.compute-1.amazonaws.com",
     user: "qwlhxbcknduwdd",

@@ -4,7 +4,9 @@ const { Client } = require('pg');
 
 const client = new Client({
   connectionString: process.env.DB_URL,
-  ssl: true
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
 client.connect();
@@ -17,7 +19,7 @@ const sharedConfig = {
     password:
       "811094ca0cc6910da720492a9bed1ad49fc059ed428f7516cc9ad6c780192dca",
     database: "d1rpci2od3jqi6",
-    sslmode: "require"
+    
   },
   useNullAsDefault: true,
   migrations: { directory: "./data/migrations" },

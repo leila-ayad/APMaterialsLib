@@ -13,6 +13,8 @@ const authRouter = require("./auth/auth-router.js");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
+
+
 const server = express();
 
 // Add Access Control Allow Origin headers

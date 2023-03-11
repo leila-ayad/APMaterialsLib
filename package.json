@@ -7,7 +7,7 @@
     "test": "npm run test",
     "watch:dev": "nodemon",
     "start": "node index.js",
-    "server": "nodemon index.js",
+    "server": "NODE_ENV=development nodemon index.js",
     "migrate": "npx knex migrate:latest",
     "rollback": "npx knex migrate:rollback",
     "up": "npx knex migrate:up",
